@@ -1,8 +1,8 @@
 # زرین پال | Zarinpal
 
-Zarinpal library for Laravel based on Zarinpal API v4
+Zarinpal library for PHP based on Zarinpal API v4
 
-کتابخانه زرین پال برای لاراول براساس نسخه 4 ای‌پی‌آی زرین پال
+کتابخانه زرین پال برای PHP براساس نسخه 4 ای‌پی‌آی زرین پال
 
 ## روش نصب - Installation
 
@@ -11,7 +11,7 @@ Use composer to install this package
 برای نصب و استفاده از این پکیج می توانید از کمپوسر استفاده کنید
 
 ```bash
-composer require pishran/zarinpal
+composer require khodetaha/Zarinpal
 ```
 
 ## تنظیمات - Configuration
