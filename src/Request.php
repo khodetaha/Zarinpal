@@ -46,7 +46,7 @@ class Request
 
         $data = [
             'merchant_id' => $this->merchantId,
-            'currency' => config('zarinpal.currency'),
+            'currency' => $_ENV["ZARINPAL_CURRENCY"] ?: "IRT",
             'amount' => $this->amount,
             'description' => $this->description,
             'callback_url' => $this->callbackUrl,

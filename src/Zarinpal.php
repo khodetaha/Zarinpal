@@ -26,13 +26,13 @@ class Zarinpal
 
     public function request(): Request
     {
-        $merchantId = $this->merchantId ?: config('zarinpal.merchant_id');
+        $merchantId = $this->merchantId ?: $_ENV["ZARINPAL_MERCHANT_ID"];
         return new Request($merchantId, $this->amount);
     }
 
     public function verification(): Verification
     {
-        $merchantId = $this->merchantId ?: config('zarinpal.merchant_id');
+        $merchantId = $this->merchantId ?: $_ENV["ZARINPAL_MERCHANT_ID"];
         return new Verification($merchantId, $this->amount);
     }
 }
