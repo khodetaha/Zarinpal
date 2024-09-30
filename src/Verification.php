@@ -2,7 +2,8 @@
 
 namespace Pishran\Zarinpal;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class Verification
 {
@@ -15,10 +16,14 @@ class Verification
     /** @var string */
     private $authority;
 
+    /** @var Client */
+    private $client;
+
     public function __construct(string $merchantId, int $amount)
     {
         $this->merchantId = $merchantId;
         $this->amount = $amount;
+        $this->client = new Client();
     }
 
     public function send(): VerificationResponse
@@ -31,9 +36,20 @@ class Verification
             'authority' => $this->authority,
         ];
 
-        $response = Http::asJson()->acceptJson()->post($url, $data);
+        try {
+            $response = $this->client->post($url, [
+                'json' => $data, // Send data as JSON
+                'headers' => [
+                    'Accept' => 'application/json', // Accept JSON response
+                ],
+            ]);
 
-        return new VerificationResponse($response->json());
+            $responseBody = json_decode($response->getBody(), true); // Decode JSON response
+            return new VerificationResponse($responseBody);
+        } catch (RequestException $e) {
+            // Handle the exception as needed (log it, rethrow, etc.)
+            throw new \Exception("HTTP request failed: " . $e->getMessage());
+        }
     }
 
     public function authority(string $authority): self

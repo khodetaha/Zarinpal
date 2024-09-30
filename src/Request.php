@@ -2,7 +2,8 @@
 
 namespace Pishran\Zarinpal;
 
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class Request
 {
@@ -24,10 +25,14 @@ class Request
     /** @var string */
     private $email;
 
+    /** @var Client */
+    private $client;
+
     public function __construct(string $merchantId, int $amount)
     {
         $this->merchantId = $merchantId;
         $this->amount = $amount;
+        $this->client = new Client();
     }
 
     public function send(): RequestResponse
@@ -53,9 +58,25 @@ class Request
             'metadata' => $metadata,
         ];
 
-        $response = Http::asJson()->acceptJson()->post($url, $data);
-
-        return new RequestResponse($response->json());
+        try {
+            // Send the request using Guzzle
+            $response = $this->client->post($url, [
+                'json' => $data,
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+            ]);
+    
+            // Decode the response and convert it to an array
+            return new RequestResponse(json_decode($response->getBody()->getContents(), true)); // Convert stdClass to array
+        } catch (RequestException $e) {
+            // Create a response object with error details
+            $errorResponse = new RequestResponse([
+                'Status' => 0, // Or any specific error code you want to set
+                'Message' => "Error sending request: " . $e->getMessage(),
+            ]);
+            return $errorResponse; // Return the error response
+        }
     }
 
     public function description(string $description): self

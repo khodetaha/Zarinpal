@@ -2,8 +2,6 @@
 
 namespace Pishran\Zarinpal;
 
-use Illuminate\Http\RedirectResponse;
-
 class RequestResponse
 {
     /** @var int */
@@ -45,11 +43,14 @@ class RequestResponse
         return $url.$this->authority;
     }
 
-    public function redirect(): ?RedirectResponse
+    public function redirect()
     {
         $url = $this->url();
-
-        return $url ? redirect($url) : null;
+        if ($url) {
+            header("Location: " . $url);
+            exit();
+        }
+        return null;
     }
 
     public function authority(): string
