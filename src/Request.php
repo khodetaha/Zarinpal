@@ -1,6 +1,6 @@
 <?php
 
-namespace Pishran\Zarinpal;
+namespace Khodetaha\Zarinpal;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;

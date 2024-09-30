@@ -1,6 +1,6 @@
 <?php
 
-use Pishran\Zarinpal\Zarinpal;
+use Khodetaha\Zarinpal\Zarinpal;
 
 if (! function_exists('zarinpal')) {
     function zarinpal(): Zarinpal
