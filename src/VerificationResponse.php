@@ -65,6 +65,11 @@ class VerificationResponse
         return $this->fee;
     }
 
+    public function error_code(): int
+    {
+        return $this->code;
+    }
+
     public function error(): Error
     {
         return new Error($this->code);
