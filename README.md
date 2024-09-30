@@ -97,3 +97,16 @@ if (!$response->success()) {
 // دریافت شماره پیگیری تراکنش و انجام امور مربوط به دیتابیس
 return $response->referenceId();
 ```
+
+## نکته:
+
+اگر می‌خواهید اطلاعات را از فایل ENV بخوانید، مطمئن شوید که پکیج `vlucas/phpdotenv` نصب شده و فایل ENV به درستی فراخوانی شده است.
+
+```
+composer require vlucas/phpdotenv
+```
+
+```php
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+```
